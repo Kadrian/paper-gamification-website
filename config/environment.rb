@@ -1,4 +1,4 @@
-ENV['RAILS_RELATIVE_URL_ROOT'] = "/rails3"
+ENV['RAILS_RELATIVE_URL_ROOT'] = "/papers"
 
 # Load the Rails application.
 require File.expand_path('../application', __FILE__)
