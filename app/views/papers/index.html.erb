@@ -1,0 +1,18 @@
+<h1 id="headline">See my progress on those papers</h1>
+
+<div class="container">
+  <div class="row">
+  <% @papers.each do |paper| %>
+    <div class="span8">
+        <div class="paper"><%= link_to paper.title, paper, :class => "paper-link" %></div>
+    </div>
+    <div class="span4">
+	  <% if paper.alive %>	
+		<div class="paper-active">I'm typing ... !</div>
+	  <% else %>
+		<div class="paper-inactive">I'm not typing.</div>
+	  <% end %>
+	</div>
+  <% end %>
+  </div>
+</div>

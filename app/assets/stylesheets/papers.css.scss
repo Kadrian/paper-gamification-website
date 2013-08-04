@@ -1,0 +1,64 @@
+// Place all the styles related to the Papers controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+body{
+	background-color: black;
+}
+
+h1{
+	margin:0;
+	padding:80px;
+	text-align:center;
+	font-size:50px;
+	letter-spacing:2px;
+}
+
+h3{
+	text-align:center;
+	letter-spacing:2px;
+}
+
+#backbutton{
+	text-align:center;	
+	position:relative;
+	top:-50px;
+}
+
+#headline {
+	margin:0;
+	padding:100px;
+	text-align:center;
+	font-size:60px;
+}
+
+$padding: 50px;
+$margin: 0;
+$fontsize: 40px;
+$lineheight: 40px;
+
+.paper{
+	margin: $margin;
+	padding: $padding;
+	font-size: $fontsize;
+	line-height: $lineheight;
+}
+
+.paper-link{
+	padding: 10px;
+	border: 2px solid white;	
+}
+
+.paper-inactive{
+	margin: $margin;
+	padding: $padding;
+	font-size: $fontsize;
+	line-height: $lineheight;
+}
+
+.paper-active{
+	margin: $margin;
+	padding:$padding;
+	font-size: $fontsize;
+	line-height: $lineheight;
+	color: #0f0;
+}
