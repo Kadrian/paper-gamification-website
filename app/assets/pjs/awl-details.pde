@@ -51,7 +51,6 @@ void setup_words(){
 		if (category_hits[key] > max_val)
 			max_val = category_hits[key];
 	}
-	console.log(max_val);
 
 	for (key in category_hits){
 		int x = floor(index / per_column);

@@ -10,7 +10,7 @@
 		error: (jqXHR, textStatus, errorThrown) ->
 			console.log "WARNING: Couldn't get current stats"
 		success: (data, textStatus, jqXHR) ->
-			console.log "SUCCESS: Got current stats, rendering..."
+			console.log "SUCCESS: Got current stats, updating sketches..."
 
 			for sketch in sketch_ids
 				updateSketch(sketch, data)
