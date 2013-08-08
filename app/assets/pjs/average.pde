@@ -30,13 +30,13 @@ void setup_label(){
 	textFont(createFont("Arial",70,true));
 	fill(360,0,100); // White
 	textAlign(CENTER);
-	text(nf(avg_len, 0, 2), width/2, 80);
+	text(nf(avg_len, 0, 2), width/2, 100);
 }
 
 void setup_frame(){
 	// Draw a frame around it
 	inset = 40;
-	yOff = 10;
+	yOff = 30;
 	h = 90;
 	noFill();
 	strokeWeight(1);
@@ -46,7 +46,7 @@ void setup_frame(){
 
 void setup_scale(){
 	// Draw a scale
-	yOff = 120;
+	yOff = 140;
 	inset = 10;
 	stripes = 6;
 	stripeHeight = 10;

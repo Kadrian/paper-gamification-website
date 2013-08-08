@@ -2,7 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 @updateSketches = (id) ->
-	sketch_ids = ["words", "average", "distinct", "oxford", "fancy", "awl"]
+	sketch_ids = ["words", "average", "distinct", "oxford", "fancy", "awl", "awl-details"]
 
 	$.ajax id.toString(),
 		type: 'GET'
@@ -42,4 +42,4 @@ $ ->
 
 		setInterval ->
 			updateSketches(paper_id)
-		, 2000
+		, 3000

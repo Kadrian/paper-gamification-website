@@ -1,5 +1,4 @@
 PaperGamificationWebsite::Application.routes.draw do
-  scope '/papers' do
     # all resources and routes go here
     root :to => "papers#index"
 
@@ -59,5 +58,4 @@ PaperGamificationWebsite::Application.routes.draw do
     #     # (app/controllers/admin/products_controller.rb)
     #     resources :products
     #   end
-    end
 end

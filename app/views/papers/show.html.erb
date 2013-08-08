@@ -1,7 +1,10 @@
 <p id="notice"><%= notice %></p>
 
 <h1><%= @paper.title %></h1>
-<p id="backbutton"><%= link_to 'BACK TO ALL PAPERS', papers_path %><p>
+<p id="backbutton"><%= link_to 'BACK TO ALL PAPERS', papers_path %></p>
+<% if @paper.alive %>	
+	<p id="typing">I'm currently typing ... !</p>
+<% end %>
 <div class="container">
 	<div class="visualization">
 		<div class="row">
@@ -24,12 +27,17 @@
 				<canvas id="oxford" data-processing-sources=<%=asset_path 'oxford.pde'%>></canvas>
 			</div>
 			<div class="span4 text-center">
-				<h3><a href="http://www.uefap.com/vocab/select/awl.htm">AWL</a> coverage</h3>
+				<h3><a href="http://www.uefap.com/vocab/select/awl.htm">Academic Word List</a></h3>
 				<canvas id="awl" data-processing-sources=<%=asset_path 'awl.pde'%>></canvas>
 			</div>
 			<div class="span4 text-center">
 				<h3>Fancy words coverage</h3>
 				<canvas id="fancy" data-processing-sources=<%=asset_path 'fancy.pde'%>></canvas>
+			</div>
+		</div>
+		<div class="row">
+			<div class="span12 text-center">
+				<canvas id="awl-details" data-processing-sources=<%=asset_path 'awl-details.pde'%>></canvas>
 			</div>
 		</div>
 	</div>

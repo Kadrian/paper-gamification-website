@@ -1,16 +1,8 @@
-@font-face{ 
-  font-family: "Eurosti";
-  src: url('http://fontsforweb.com/public/fonts/3117/Eurosti.eot');
-  src: local("Eurostile"), 
-  url('http://fontsforweb.com/public/fonts/3117/Eurosti.woff') format("woff"), 
-  url('http://fontsforweb.com/public/fonts/3117/Eurosti.ttf') format("truetype");
-}
-
 body {
   background-color: #000;
   color: #fff;
   font-size: 13px;
-  font-family: "Eurosti";
+  font-family: "Jura", sans-serif;
   line-height: 18px;
 }
 
