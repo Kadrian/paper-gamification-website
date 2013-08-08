@@ -42,4 +42,4 @@ $ ->
 
 		setInterval ->
 			updateSketches(paper_id)
-		, 3000
+		, 5000
