@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20130804141546) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "papers", force: true do |t|
     t.string   "title"
     t.text     "stats"
