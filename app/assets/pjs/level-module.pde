@@ -46,7 +46,7 @@ void renderLevel(){
 	// Determine current level
 	level = 1
 	for (int l : levels){
-		if (num > l)
+		if (num >= l)
 			level++;
 	}
 
@@ -54,8 +54,8 @@ void renderLevel(){
 	textAlign(CENTER);
 	textFont(createFont("Arial",20,true));       
 	if (levels.length == level-1){ // Last level reached
-		fill(220, 100, 50);
-		text("LEVEL " + level, width/2, yOff);
+		fill(120, 100, 100);
+		text("LEVEL " + level + " (MAX)", width/2, yOff);
 	} else {
 		fill(360, 0, 100);
 		text("LEVEL " + level, width/2, yOff);
@@ -73,11 +73,29 @@ void renderLevelProgress(level){
 	w = width - 2 * inset;
 	xp = 0;
 
-	minLevel = (level == 1) ? 0 : levels[level-2];
-	maxLevel = (level-1 == levels.length) ? levels[level-2] : levels[level-1];
+	// Determine level min + max borders
+	minLevel = 0;
+	maxLevel = 0;
+	if (level == 1){
+		// First level
+		maxLevel = levels[level-1];
+	} else if (level-1 == levels.length) {
+		// Last level
+		minLevel = levels[level-2];
+		maxLevel = num;
+	} else {
+		// Default	
+		minLevel = levels[level-2];
+		maxLevel = levels[level-1];
+	}
 
 	// Calculate current xp in pixels
 	xp = map(num, minLevel, maxLevel, 0, w);
+
+	// In case we've hit the max level render full bar
+	if (minLevel == maxLevel){
+		xp = w;
+	}
 
 	stroke(360, 0, 100);
 	strokeWeight(2);
