@@ -1,9 +1,22 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
-@updateSketches = (id) ->
-	sketch_ids = ["words", "average", "distinct", "oxford", "fancy", "awl", "awl-details"]
+# Sketches: sketch id + boolean if the sketch has loaded yet
+sketches = {
+	"words": 0, 
+	"average": 0, 
+	"distinct": 0, 
+	"oxford": 0,
+	"fancy": 0,
+	"awl": 0,
+	"awl-details": 0
+}
 
+totalWordsLevels = [50, 100, 200, 300, 500, 1000, 2000, 3000, 5000];
+totalWordsIdentifier = "num_words";
+
+distinctLevels = [10, 50, 100, 150, 200, 300, 400, 800, 1000];
+distinctIdentifier = "different_words";
+
+
+@updateSketches = (id) ->
 	$.ajax id.toString(),
 		type: 'GET'
 		dataType: 'json'
@@ -12,7 +25,7 @@
 		success: (data, textStatus, jqXHR) ->
 			console.log "SUCCESS: Got current stats, updating sketches..."
 
-			for sketch in sketch_ids
+			for sketch of sketches
 				updateSketch(sketch, data)
 
 
@@ -25,6 +38,9 @@
 	mem = setInterval ->
 		instance = Processing.getInstanceById(sketch);
 		if instance
+			if not sketches[sketch]
+				# Load this sketch for the first time 
+				initSketch(sketch, instance)
 			instance.update($.parseJSON(data["stats"]));
 			clearInterval(mem);
 		else
@@ -33,6 +49,19 @@
 				console.log("WARNING: Failed to load sketch");
 				clearInterval(mem);
 	, 10
+
+
+@initSketch = (sketch, instance) ->
+	switch sketch
+		when "words"
+			instance.setIdentifier(totalWordsIdentifier);
+			instance.setLevels(totalWordsLevels);
+		when "distinct"
+			instance.setIdentifier(distinctIdentifier);
+			instance.setLevels(distinctLevels);
+		else # Do nothing
+
+	sketches[sketch] = 1
 
 
 $ ->

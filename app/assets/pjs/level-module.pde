@@ -1,14 +1,21 @@
+// Global variables
 var num = 0;
-var identifier = "num_words";
-// Level 1 goes from 
-//         0 to levels[0] 
-int [] levels = [50, 100, 200, 300, 500, 1000, 2000, 3000, 5000];
+var identifier = "";
+int [] levels = []; // Level 1 goes from 0 to levels[0]
 
 void setup(){
 	size(300, 200);
 	noLoop();	
 	background(0);
-	colorMode(HSB,360,100,100,100);
+	colorMode(HSB, 360, 100, 100, 100);
+}
+
+void setLevels(lev){
+	levels = lev;
+}
+
+void setIdentifier(id){
+	identifier = id;
 }
 
 void update(stats){
@@ -17,25 +24,25 @@ void update(stats){
 	// RESET
 	background(0);
 	// DRAW STUFF
-	render_stats();
-	render_level();
-	render_brackets();
+	renderStats();
+	renderLevel();
+	renderBrackets();
 }
 
-void render_stats(){
+void renderStats(){
 	// Render stats
 	fill(
 		map(num, 0, levels[levels.length - 1], 0, 100),
 		100,	
 		100
 	);
-	textFont(createFont("Arial",70,true));       
+	yOff = 110;
+	textFont(createFont("Arial", 70, true));       
 	textAlign(CENTER);
-	text(num, width/2, 100);
-
+	text(num, width/2, yOff);
 }
 
-void render_level(){
+void renderLevel(){
 	// Determine current level
 	level = 1
 	for (int l : levels){
@@ -43,53 +50,56 @@ void render_level(){
 			level++;
 	}
 
+	yOff = 40;
 	textAlign(CENTER);
 	textFont(createFont("Arial",20,true));       
 	if (levels.length == level-1){ // Last level reached
-		fill(220,100,50);
-		text("LEVEL " + level, width/2, 30);
+		fill(220, 100, 50);
+		text("LEVEL " + level, width/2, yOff);
 	} else {
-		fill(360,0,100);
-		text("LEVEL " + level, width/2, 30);
+		fill(360, 0, 100);
+		text("LEVEL " + level, width/2, yOff);
 	}
 
-	render_level_progress(level);
+	renderLevelProgress(level);
 }	
 
-void render_level_progress(level){
-	// Render progressbar
+void renderLevelProgress(level){
 	// Parameters
 	inset = 80;
 	h = 20;
-	y_off = 120;
-	y_label_off = y_off + h + 25;
+	yOff = 130;
+	yLabelOff = yOff + h + 25;
 	w = width - 2 * inset;
 	xp = 0;
 
-	min_level = (level == 1) ? 0 : levels[level-2];
-	max_level = (level-1 == levels.length) ? levels[level-2] : levels[level-1];
+	minLevel = (level == 1) ? 0 : levels[level-2];
+	maxLevel = (level-1 == levels.length) ? levels[level-2] : levels[level-1];
 
-	xp = map(num, min_level, max_level, 0, w);
+	// Calculate current xp in pixels
+	xp = map(num, minLevel, maxLevel, 0, w);
 
-	stroke(360,0,100);
+	stroke(360, 0, 100);
 	strokeWeight(2);
 	noFill();
+
 	// Bar frame
-	rect(inset, y_off, w, h);
+	rect(inset, yOff, w, h);
+
 	// Min and Max labels
 	textFont(createFont("Arial", 12, true));       
-	dash_len = 25;
-	line(inset, y_off, inset, y_off + dash_len);
-	line(inset + w, y_off, inset + w, y_off + dash_len);
-	text(min_level, inset, y_label_off);
-	text(max_level, inset + w, y_label_off);
+	dashLen = 25;
+	line(inset, yOff, inset, yOff + dashLen);
+	line(inset + w, yOff, inset + w, yOff + dashLen);
+	text(minLevel, inset, yLabelOff);
+	text(maxLevel, inset + w, yLabelOff);
 
-	fill(360,0,100);
 	// Bar value
-	rect(inset, y_off, xp, h);
+	fill(360,0,100);
+	rect(inset, yOff, xp, h);
 }
 
-void render_brackets(){
+void renderBrackets(){
 	inset = 20;
 	corner = 20;
 

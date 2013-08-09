@@ -1,103 +1,105 @@
-// Level 1 goes from 
-//         0 to levels[0] 
+// Level 1 goes from 0 to levels[0]
 int [] levels = [10, 20, 50, 100, 150, 200, 300, 400, 570];
 
 void setup(){
 	size(300, 200);
 	noLoop();	
 	background(0);
-	colorMode(HSB,360,100,100,100);
+	colorMode(HSB, 360, 100, 100, 100);
 }
 
 void update(stats){
-	words_hits = stats["awl_coverage"]["words_hits"];
-	words_total = stats["awl_coverage"]["words_total"];
-	category_hits = stats["awl_coverage"]["category_num_hits"];
-	category_total = stats["awl_coverage"]["category_total"];
+	wordsHits = stats["awl_coverage"]["words_hits"];
+	wordsTotal = stats["awl_coverage"]["words_total"];
+	categoryHits = stats["awl_coverage"]["category_num_hits"];
+	categoryTotal = stats["awl_coverage"]["category_total"];
 
 	// RESET
 	background(0);
 
 	// DRAW STUFF
-	render_stats();
-	render_level();
-	render_brackets();
+	renderStats();
+	renderLevel();
+	renderBrackets();
 }
 
-void render_stats(){
+void renderStats(){
 	// Render stats
 	fill(
-		map(category_hits, 0, levels[levels.length - 1], 0, 100),
+		map(categoryHits, 0, levels[levels.length - 1], 0, 100),
 		100,	
 		100
 	);
-	textFont(createFont("Arial",50,true));       
+	int yOff = 95;
+	textFont(createFont("Arial",45,true));
 	textAlign(CENTER);
-	text(category_hits, width/2, 85);
+	text(categoryHits + " of " + categoryTotal, width/2, yOff);
 	textFont(createFont("Arial",20,true));       
-	text("categories unlocked", width/2, 110);
+	text("categories unlocked", width/2, yOff + 30);
 }
 
-void render_level(){
+void renderLevel(){
 	// Determine current level
 	level = 1
 	for (int l : levels){
-		if (category_hits > l)
+		if (categoryHits > l)
 			level++;
 	}
 
+	yOff = 40;
 	textAlign(CENTER);
-	textFont(createFont("Arial",20,true));       
-	if (levels.length == level-1){ // Last level reached
-		fill(220,100,50);
-		text("LEVEL " + level, width/2, 30);
+	textFont(createFont("Arial", 20, true));
+	if (levels.length == level - 1){
+		fill(120, 100, 100); // Last level reached -> green
+		text("LEVEL " + level, width/2, yOff);
 	} else {
-		fill(360,0,100);
-		text("LEVEL " + level, width/2, 30);
+		fill(360, 0, 100); // White
+		text("LEVEL " + level, width/2, yOff);
 	}
 
-	render_level_progress(level);
+	renderLevelProgress(level);
 }	
 
-void render_level_progress(level){
-	// Render progressbar
-	// Parameters
+void renderLevelProgress(level){
+	// Layout Parameters 
 	inset = 80;
 	h = 20;
-	y_off = 130;
-	y_label_off = y_off + h + 25;
+	yOff = 150;
+	yLabelOff = yOff + h + 25;
 	w = width - 2 * inset;
-	xp = 0;
 
-	min_level = (level == 1) ? 0 : levels[level-2];
-	max_level = (level-1 == levels.length) ? levels[level-2] : levels[level-1];
+	minLevel = (level == 1) ? 0 : levels[level-2];
+	maxLevel = (level-1 == levels.length) ? levels[level-2] : levels[level-1];
 
-	xp = map(category_hits, min_level, max_level, 0, w);
+	// Calculate current xp in pixels
+	xp = map(categoryHits, minLevel, maxLevel, 0, w);
 
 	stroke(360,0,100);
 	strokeWeight(2);
 	noFill();
-	// Bar frame
-	rect(inset, y_off, w, h);
+
+	// Progress bar frame
+	rect(inset, yOff, w, h);
+
 	// Min and Max labels
 	textFont(createFont("Arial", 12, true));       
-	dash_len = 25;
-	line(inset, y_off, inset, y_off + dash_len);
-	line(inset + w, y_off, inset + w, y_off + dash_len);
-	text(min_level, inset, y_label_off);
-	text(max_level, inset + w, y_label_off);
+	dashLen = 25;
+	line(inset, yOff, inset, yOff + dashLen);
+	line(inset + w, yOff, inset + w, yOff + dashLen);
+	text(minLevel, inset, yLabelOff);
+	text(maxLevel, inset + w, yLabelOff);
 
-	fill(360,0,100);
 	// Bar value
-	rect(inset, y_off, xp, h);
+	fill(360, 0, 100);
+	rect(inset, yOff, xp, h);
 }
 
-void render_brackets(){
+void renderBrackets(){
 	inset = 20;
 	corner = 20;
 
 	noFill();
-	stroke(360,0,100);
+	stroke(360, 0, 100);
 	strokeWeight(2);
 	// Left
 	beginShape();
