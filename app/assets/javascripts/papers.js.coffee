@@ -6,8 +6,7 @@ sketches = {
 	"oxford": 0,
 	"fancy": 0,
 	"awl": 0,
-	"awl-details": 0,
-	"word-cloud": 0
+	"awl-details": 0
 }
 
 update_interval = 5000;
