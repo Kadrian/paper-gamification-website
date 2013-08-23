@@ -6,15 +6,17 @@ sketches = {
 	"oxford": 0,
 	"fancy": 0,
 	"awl": 0,
-	"awl-details": 0
+	"awl-details": 0,
+	"word-cloud": 0
 }
+
+update_interval = 5000;
 
 totalWordsLevels = [50, 100, 200, 300, 500, 1000, 2000, 3000, 5000];
 totalWordsIdentifier = "num_words";
 
-distinctLevels = [10, 50, 100, 150, 200, 300, 400, 800, 1000];
+distinctLevels = [50, 100, 200, 300, 500, 800, 1000, 1250, 1500];
 distinctIdentifier = "different_words";
-
 
 @updateSketches = (id) ->
 	$.ajax id.toString(),
@@ -71,4 +73,4 @@ $ ->
 
 		setInterval ->
 			updateSketches(paper_id)
-		, 5000
+		, update_interval 
