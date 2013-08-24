@@ -6,12 +6,13 @@ sketches = {
 	"oxford": 0,
 	"fancy": 0,
 	"awl": 0,
-	"awl-details": 0
+	"awl-details": 0,
+	"word-cloud": 0
 }
 
 update_interval = 5000;
 
-totalWordsLevels = [50, 100, 200, 300, 500, 1000, 2000, 3000, 5000];
+totalWordsLevels = [100, 200, 300, 500, 1000, 2000, 3000, 4000, 5500];
 totalWordsIdentifier = "num_words";
 
 distinctLevels = [50, 100, 200, 300, 500, 800, 1000, 1250, 1500];
