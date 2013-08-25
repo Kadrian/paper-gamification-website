@@ -91,6 +91,7 @@ void overlapsExistingWords(wordRect, words){
 }
 
 void getRandomWordRect(word, rotation){
+	// Assign each word a font size based on its occurrence
 	var wordText = word[0].toUpperCase();
 	var wordOccurrences = word[1];
 	var wordHeight = map(sq(wordOccurrences), 1, sq(getMaxWordOccurrence()), 10, 70);
@@ -106,73 +107,59 @@ void getRandomWordRect(word, rotation){
 	int padding = 250;
 
 	// Consider a word related padding, respective to other words 
-	int wordPadding = 2;
+	int wordPadding = 4;
 
+	// TODO: Refactor, looks ugly ;-)
+	Point p = new Point(0,0);
 	if (rotation != 0){
 		// Assume rotation at 90 degrees
-		float x1 = random(padding, width - padding) - (wordHeight / 2.0);
-		float y1 = random(padding, height - padding) - (wordWidth / 2.0);
-		return new Rectangle(x1 + ascent - wordPadding, 
-							 x1 + ascent + wordHeight - descent + wordPadding, 
-							 y1 - wordPadding, 
-							 y1 + wordWidth + wordPadding);
+		p.x = random(padding, width - padding) - (wordHeight / 2.0);
+		p.y = random(padding, height - padding) - (wordWidth / 2.0);
+		return new Rectangle(p.x + ascent - wordPadding, 
+							 p.x + ascent + wordHeight - descent + wordPadding, 
+							 p.y - wordPadding, 
+							 p.y + wordWidth + wordPadding);
 	} else {
 		// No rotation
-		float x1 = random(padding, width - padding) - (wordWidth / 2.0);
-		float y1 = random(padding, height - padding) - (wordHeight / 2.0);
-		return new Rectangle(x1 - wordPadding, 
-							 x1 + wordWidth + wordPadding, 
-							 y1 + ascent - wordPadding, 
-							 y1 + ascent + wordHeight - descent + wordPadding);
+		p.x = random(padding, width - padding) - (wordWidth / 2.0);
+		p.y = random(padding, height - padding) - (wordHeight / 2.0);
+		return new Rectangle(p.x - wordPadding, 
+							 p.x + wordWidth + wordPadding, 
+							 p.y + ascent - wordPadding, 
+							 p.y + ascent + wordHeight - descent + wordPadding);
 	}
 }
 
 Rectangle moveWordRect(wordRect){
-	// Perform a spiral movement from center
-	// using the archimedean spiral and polar coordinates
-	// equation: r = a + b * phi
+	Point mid = wordRect.getMiddlePoint();
 
-	// Calculate mid of rect
-	var midX = wordRect.x1 + (wordRect.x2 - wordRect.x1)/2.0;
-	var midY = wordRect.y1 + (wordRect.y2 - wordRect.y1)/2.0;
+	Point newMid = movePointOnSpiral(mid, 0.2);
 
-	// Calculate radius from center 
-	var r = sqrt(sq(midX - width/2.0) + sq(midY - height/2.0));
-
-	// Set a fixed spiral width: Distance between successive turns
-	var b = 15; 
-
-	// Determine current angle on spiral
-	var phi = r / b * 2.0 * PI;
-
-	// Increase that angle and calculate new radius
-	phi += 0.2;
-	r = (b * phi) / (2.0 * PI);
-
-	// Convert back to cartesian coordinates
-	var newMidX = r * cos(phi);
-	var newMidY = r * sin(phi);
-
-	// Shift back respective to mid
-	newMidX += width/2;
-	newMidY += height/2;
-
-	// Paint
-	// stroke(255,0,0);
-	// strokeWeight(3);
-	// point(newMidX, newMidY);	
-
-	// Calculate movement 
-	var moveX = newMidX - midX;
-	var moveY = newMidY - midY;
-
-	// Apply movement
-	wordRect.x1 += moveX;
-	wordRect.x2 += moveX;
-	wordRect.y1 += moveY;
-	wordRect.y2 += moveY;
+	Point movement = newMid.subtract(mid);
+	wordRect.move(movement);
 
 	return wordRect;
+}
+
+Point movePointOnSpiral(Point p, float movementRadians){
+	// Perform a spiral movement from center
+	// using the archimedean spiral and polar coordinates
+	// equation: radius = a + b * phi
+
+	// Calculate radius from center 
+	float radius = sqrt(sq(p.x - width/2.0) + sq(p.y - height/2.0));
+
+	// Set a fixed distance between successive turns
+	float spiralWidth = 15.0; 
+
+	// Determine current angle on spiral
+	float phi = radius / spiralWidth * 2.0 * PI;
+
+	// Increase that angle and calculate new radius
+	phi += movementRadians;
+	radius = (spiralWidth * phi) / (2.0 * PI);
+
+	return polarToCartesian(radius, phi);
 }
 
 void render(word, wordRect, rotation){
@@ -182,18 +169,17 @@ void render(word, wordRect, rotation){
 
 	textAlign(CENTER,CENTER);
 	// Calculate mid of rect
-	var midX = wordRect.x1 + (wordRect.x2 - wordRect.x1)/2.0;
-	var midY = wordRect.y1 + (wordRect.y2 - wordRect.y1)/2.0;
+	Point mid = wordRect.getMiddlePoint();
 
 	if (rotation != 0){
 		pushMatrix();
-		translate(midX, midY);
+		translate(mid.x, mid.y);
 		rotate(rotation);
 		text(word[0].toUpperCase(), 0, 0);
 		popMatrix();
 	}
 	else{
-		text(word[0].toUpperCase(), midX, midY);
+		text(word[0].toUpperCase(), mid.x, mid.y);
 	}
 
 	// fill(255, 50);
@@ -201,6 +187,23 @@ void render(word, wordRect, rotation){
 	// 	wordRect.y1, 
 	// 	wordRect.x2 - wordRect.x1, 
 	// 	wordRect.y2 - wordRect.y1);
+}
+
+class Point {
+	float x, y;
+
+	Point(ix, iy){
+		x = ix;	
+		y = iy;
+	}
+	
+	Point subtract(Point p){
+		return new Point(x - p.x, y - p.y);	
+	}	
+
+	Point add(Point p){
+		return new Point(x + p.x, y + p.y);	
+	}
 }
 
 class Rectangle {
@@ -212,4 +215,29 @@ class Rectangle {
 		y1 = iy1;
 		y2 = iy2;
 	}
+
+	Point getMiddlePoint(){
+		return calculateMid(new Point(x1, y1), new Point(x2, y2));
+	}
+
+	void move(Point p){
+		x1 += p.x;
+		x2 += p.x;
+		y1 += p.y;
+		y2 += p.y;
+	}
+}
+
+Point calculateMid(Point p1, Point p2){
+	return new Point(
+		(p1.x + p2.x) / 2.0, 
+		(p1.y + p2.y) / 2.0
+	);
+}
+
+Point polarToCartesian(float radius, float phi){
+	return new Point(
+		radius * cos(phi) + width/2.0, 
+		radius * sin(phi) + height/2.0
+	);
 }
