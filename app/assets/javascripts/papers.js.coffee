@@ -1,5 +1,6 @@
 # Sketches: sketch id + boolean if the sketch has loaded yet
 sketches = {
+	"paragraphs",
 	"words": 0, 
 	"average": 0, 
 	"distinct": 0, 
