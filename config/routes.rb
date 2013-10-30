@@ -1,7 +1,7 @@
 PaperGamificationWebsite::Application.routes.draw do
     # all resources and routes go here
     root :to => "papers#index"
-
+    post "/applause/" => "applause#create"
     resources :papers
 
     # The priority is based upon order of creation: first created -> highest priority.
