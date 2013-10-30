@@ -50,3 +50,7 @@ gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) support
 gem 'twitter-bootstrap-rails', :git => 'https://github.com/seyhunak/twitter-bootstrap-rails.git'
 
 gem 'postmark-rails'
+
+group :development do
+  gem "sqlite3"
+end

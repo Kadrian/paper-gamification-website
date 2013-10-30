@@ -1,11 +1,11 @@
-class PapersController < ApplicationController
+class ApplauseController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
 
   # POST /applause/
   def create
     paper = Paper.find(params[:paper_id])
-    ApplauseMailer.applause_email(paper).deliver
+    ApplauseMailer.applause_mail(paper).deliver
 
     respond_to do |format|
       format.html { redirect_to paper, notice: 'Applause was successfully sent.' }      
