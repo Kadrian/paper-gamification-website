@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130804141546) do
+ActiveRecord::Schema.define(version: 20131031130746) do
+
+  create_table "applauses", force: true do |t|
+    t.integer  "paper_id"
+    t.string   "user_agent"
+    t.string   "referer"
+    t.string   "source_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "papers", force: true do |t|
     t.string   "title"

@@ -5,18 +5,20 @@ class ApplauseController < ApplicationController
   # POST /applause/
   def create
     paper = Paper.find(params[:paper_id])
-    ApplauseMailer.applause_mail(paper).deliver
+    applause = Applause.new({:paper => paper, 
+      :source_ip => request.remote_ip, 
+      :user_agent => request.env['HTTP_USER_AGENT'],
+      :referer => request.env['HTTP_ORIGIN']})
 
-    respond_to do |format|
-      format.html { redirect_to paper, notice: 'Applause was successfully sent.' }      
-      #if @paper.save
-       ## format.html { redirect_to @paper, notice: 'Paper was successfully created.' }
-       # format.json { render action: 'show', status: :created, location: @paper }
-      #else
-      #  format.html { render action: 'new' }
-      #  format.json { render json: @paper.errors, status: :unprocessable_entity }
-      #end
+    mail = ApplauseMailer.applause_mail(applause).deliver
+    
+    if applause.save && mail.delivered
+      flash[:notice] = "Applause was successfully sent. The author has been cheered up and disturbed."
+    else
+      flash[:error] = "The applause could not be sent"
     end
+    redirect_to paper
+
   end
 
 

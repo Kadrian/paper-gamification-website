@@ -1,0 +1,13 @@
+<div class="applause">
+	<%  applause_count = @paper.applause.size  %>
+
+	<%= link_to image_tag('hands-clapping.jpg'), create_applause_path( :paper_id => @paper.id ), {:method => "POST" } %>
+	<br/>
+	<small>
+	<% if applause_count == 1 %>
+		The author has been cheered up once!
+	<% elsif applause_count > 1%> 
+		The author has been cheered up <%=  applause_count %> times! <br/>Be the next!
+	<% end if %> 
+	</small>
+</div>		

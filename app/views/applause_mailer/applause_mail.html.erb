@@ -5,5 +5,12 @@
   </head>
   <body>
 	<h1>Cooler Typ!</h1>
+	Says <%= @applause.source_ip %> from <%= @applause.referer %>! <br/>
+	<small><%= @applause.user_agent %></small>!
+	<% if @applause.paper.applause.size > 1 %>
+	And not only this user! <%= @applause.paper.applause.size %> other users like as well that you are an damn active writer!
+	<% end if %>
+	<br/><br/>
+	Go on, dude!
   </body>
 </html>
