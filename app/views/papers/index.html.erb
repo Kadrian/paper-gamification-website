@@ -2,18 +2,18 @@
 <h2 id="subline">As soon as I hit save, statistics get uploaded. Your browser refreshes every 5 seconds.</h2>
 
 <div class="container">
-  <div class="row">
   <% @papers.each do |paper| %>
+  <div class="row">
     <div class="span8">
         <div class="paper"><%= link_to paper.title, paper, :class => "paper-link" %></div>
     </div>
     <div class="span4">
-	  <% if paper.alive %>	
-		<div class="paper-active">I'm typing ... !</div>
-	  <% else %>
-		<div class="paper-inactive">I'm not typing.</div>
-	  <% end %>
-	</div>
-  <% end %>
+  	  <% if paper.alive %>	
+  		<div class="paper-active">I'm typing ... !</div>
+  	  <% else %>
+  		<div class="paper-inactive">I'm not typing.</div>
+  	  <% end %>
+	  </div>
   </div>
+  <% end %>
 </div>

@@ -26,32 +26,32 @@ void update(stats){
 }
 
 void setup_label(){
-	// Draw average length 
 	textFont(createFont("Arial",70,true));
 	fill(360,0,100); // White
 	textAlign(CENTER);
+
 	text(nf(avg_len, 0, 2), width/2, 100);
 }
 
 void setup_frame(){
-	// Draw a frame around it
-	inset = 40;
-	yOff = 30;
-	h = 90;
+	var inset = 40;
+	var yOff = 30;
+	var h = 90;
+
 	noFill();
 	strokeWeight(1);
 	stroke(col);
+
 	rect(inset, yOff, width-2*inset, h);
 }
 
 void setup_scale(){
-	// Draw a scale
-	yOff = 140;
-	inset = 10;
-	stripes = 6;
-	stripeHeight = 10;
-	line_width = width - 2 * inset;
-	increment = line_width / float(stripes-1);
+	var yOff = 140;
+	var inset = 10;
+	var stripes = 6;
+	var stripeHeight = 10;
+	var line_width = width - 2 * inset;
+	var increment = line_width / float(stripes-1);
 
 	stroke(360,0,100); // White
 	strokeWeight(2);
@@ -62,9 +62,9 @@ void setup_scale(){
 		strokeWeight(3);
 		line(x, yOff - stripeHeight/2.0, x, yOff + stripeHeight/2.0);
 
-		// Stripe - Text
-		percentage = float(x-inset) / float(line_width);
-		label = nf((percentage * (maxval - minval) + minval), 0, 1);
+		// Stripe-text
+		float percentage = float(x-inset) / float(line_width);
+		var label = nf((percentage * (maxval - minval) + minval), 0, 1);
 		textFont(createFont("Arial", 12, true));
 		text(label, x, yOff + 20);
 	}

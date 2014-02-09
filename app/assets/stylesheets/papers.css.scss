@@ -55,8 +55,8 @@ canvas{
 	top: -80px;
 }
 
-$padding: 50px;
-$margin: 0;
+$padding: 15px;
+$margin: 20px;
 $fontsize: 40px;
 $lineheight: 40px;
 
@@ -65,11 +65,10 @@ $lineheight: 40px;
 	padding: $padding;
 	font-size: $fontsize;
 	line-height: $lineheight;
+	border: 2px solid white;	
 }
 
 .paper-link{
-	padding: 10px;
-	border: 2px solid white;	
 }
 
 .paper-inactive{
