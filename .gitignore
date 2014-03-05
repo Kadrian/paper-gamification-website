@@ -18,3 +18,7 @@
 .env
 *.swp
 *.DS_Store
+
+# Ignore config .ymls
+/config/database.yml
+/config/author.yml
