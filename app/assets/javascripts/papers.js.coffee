@@ -13,7 +13,7 @@ sketches = {
 
 update_interval = 5000;
 
-totalWordsLevels = [100, 200, 300, 500, 1000, 2000, 3000, 4000, 5500];
+totalWordsLevels = [100, 1000, 2000, 3000, 4000, 5000, 10000, 15000, 20000 ];
 totalWordsIdentifier = "num_words";
 
 distinctLevels = [50, 100, 200, 300, 500, 800, 1000, 1250, 1500];

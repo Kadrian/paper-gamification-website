@@ -1,6 +1,10 @@
-<p id="notice"><%= notice %></p>
+<p id="notice"><%= flash[:notice] %></p>
+<p id="error"><%= flash[:error] %></p>
 
 <h1><%= @paper.title %></h1>
+
+<%= render "applause" %>
+
 <p id="backbutton"><%= link_to 'BACK TO ALL PAPERS', papers_path %></p>
 <% if @paper.alive %>	
 	<p id="typing">I'm currently typing ... !</p>
