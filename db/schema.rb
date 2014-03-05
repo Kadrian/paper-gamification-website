@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20131031130746) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "applauses", force: true do |t|
     t.integer  "paper_id"
     t.string   "user_agent"

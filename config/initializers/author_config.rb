@@ -1,0 +1,1 @@
+APP_AUTHOR = YAML.load_file(Rails.root.join('config', 'author.yml'))
