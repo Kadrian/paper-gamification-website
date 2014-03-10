@@ -10,15 +10,19 @@ class ApplauseController < ApplicationController
       :user_agent => request.env['HTTP_USER_AGENT'],
       :referer => request.env['HTTP_ORIGIN']})
 
-    mail = ApplauseMailer.applause_mail(applause).deliver
+    saved = applause.save
     
-    if applause.save && mail.delivered
-      flash[:notice] = "Applause was successfully sent. The author has been cheered up and disturbed."
-    else
-      flash[:error] = "The applause could not be sent"
+    if APP_AUTHOR["email_enabled"]
+      mail = ApplauseMailer.applause_mail(applause).deliver
+    
+      if saved && mail.delivered
+        flash[:notice] = "Applause was successfully sent. The author has been cheered up and disturbed."
+      else
+        flash[:error] = "The applause could not be sent"
+      end
     end
-    redirect_to paper
 
+    redirect_to paper
   end
 
 
