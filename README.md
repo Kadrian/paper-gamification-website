@@ -22,21 +22,23 @@ At the moment, I use Heroku for deployment, but you should be able to deploy thi
 
 `Paper.create :title => "The Flux-Compensator"`
 
-* Add Postmark for sending emails on Heroku
+* Use that so-created paper ID when starting the [paper-gamification](https://github.com/Kadrian/paper-gamification) python script.
+
+[OPTIONAL] If you want to receive emails when someone cheers you up:
+
+* [OPTIONAL] Add Postmark for sending emails on Heroku
 `heroku addons:docs postmark`
 
-* Configure Postmark to use your email settings
+* [OPTIONAL] Configure Postmark to use your email settings
 `heroku addons:open postmark`
 
-* If you want to use postmark locally as well: you have to set environment variables.
+* [OPTIONAL] If you want to use postmark locally as well: you have to set environment variables.
 To do this automatically, you can use foreman. Create a file with your settings:
 `
 bash -c 'echo "POSTMARK_API_KEY=`heroku config:get POSTMARK_API_KEY`" >> .env'
 bash -c 'echo "POSTMARK_SMTP_SERVER=`heroku config:get POSTMARK_SMTP_SERVER`" >> .env'
 bash -c 'echo "POSTMARK_INBOUND_ADDRESS=`heroku config:get POSTMARK_INBOUND_ADDRESS`" >> .env'
 `and start your rails instance with `foreman start`
-
-* Use that so-created paper ID when starting the [paper-gamification](https://github.com/Kadrian/paper-gamification) python script.
 
 ## Contribution
 
