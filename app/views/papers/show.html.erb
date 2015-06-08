@@ -5,8 +5,8 @@
 
 <%= render "applause" %>
 
-<p id="backbutton"><%= link_to 'BACK TO ALL PAPERS', papers_path %></p>
-<% if @paper.alive %>	
+<p id="backbutton"><%= link_to 'SHOW ALL PAPERS', papers_path %></p>
+<% if @paper.alive %>
 	<p id="typing">I'm currently typing ... !</p>
 <% end %>
 <div class="container">

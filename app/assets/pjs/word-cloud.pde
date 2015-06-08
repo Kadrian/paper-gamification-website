@@ -2,7 +2,7 @@ interestingWords = new Array();
 
 void setup(){
 	size(900, 600);
-	noLoop();	
+	noLoop();
 	background(0);
 }
 
@@ -22,7 +22,7 @@ void update(stats){
 			// Change detected
 			interestingWords = newInterestingWords;
 			redrawCloud();
-			break;	
+			break;
 		}
 	}
 }
@@ -35,7 +35,7 @@ void redrawCloud(){
 	var words = new Array();
 
 	for (var i = 0; i < interestingWords.length; i++){
-		putWordThere(interestingWords[i], words);	
+		putWordThere(interestingWords[i], words);
 	}
 }
 
@@ -94,11 +94,12 @@ void getRandomWordRect(word, rotation){
 	// Assign each word a font size based on its occurrence
 	var wordText = word[0].toUpperCase();
 	var wordOccurrences = word[1];
-	var wordHeight = map(sq(wordOccurrences), 1, sq(getMaxWordOccurrence()), 10, 70);
+	var wordHeight = map(sq(wordOccurrences), 0, sq(getMaxWordOccurrence()), 10, 70);
 
 	// Set font properties already for measurement
 	textSize(wordHeight);
 	float wordWidth = textWidth(wordText);
+
 
 	float ascent = textAscent();
 	float descent = textDescent();
@@ -106,7 +107,7 @@ void getRandomWordRect(word, rotation){
 	// Consider a canvas related padding when placing the word
 	int padding = 250;
 
-	// Consider a word related padding, respective to other words 
+	// Consider a word related padding, respective to other words
 	int wordPadding = 4;
 
 	// TODO: Refactor, looks ugly ;-)
@@ -115,17 +116,17 @@ void getRandomWordRect(word, rotation){
 		// Assume rotation at 90 degrees
 		p.x = random(padding, width - padding) - (wordHeight / 2.0);
 		p.y = random(padding, height - padding) - (wordWidth / 2.0);
-		return new Rectangle(p.x + ascent - wordPadding, 
-							 p.x + ascent + wordHeight - descent + wordPadding, 
-							 p.y - wordPadding, 
+		return new Rectangle(p.x + ascent - wordPadding,
+							 p.x + ascent + wordHeight - descent + wordPadding,
+							 p.y - wordPadding,
 							 p.y + wordWidth + wordPadding);
 	} else {
 		// No rotation
 		p.x = random(padding, width - padding) - (wordWidth / 2.0);
 		p.y = random(padding, height - padding) - (wordHeight / 2.0);
-		return new Rectangle(p.x - wordPadding, 
-							 p.x + wordWidth + wordPadding, 
-							 p.y + ascent - wordPadding, 
+		return new Rectangle(p.x - wordPadding,
+							 p.x + wordWidth + wordPadding,
+							 p.y + ascent - wordPadding,
 							 p.y + ascent + wordHeight - descent + wordPadding);
 	}
 }
@@ -146,11 +147,11 @@ Point movePointOnSpiral(Point p, float movementRadians){
 	// using the archimedean spiral and polar coordinates
 	// equation: radius = a + b * phi
 
-	// Calculate radius from center 
+	// Calculate radius from center
 	float radius = sqrt(sq(p.x - width/2.0) + sq(p.y - height/2.0));
 
 	// Set a fixed distance between successive turns
-	float spiralWidth = 15.0; 
+	float spiralWidth = 15.0;
 
 	// Determine current angle on spiral
 	float phi = radius / spiralWidth * 2.0 * PI;
@@ -163,8 +164,8 @@ Point movePointOnSpiral(Point p, float movementRadians){
 }
 
 void render(word, wordRect, rotation){
-	fill(random(80, 255), 
-		 random(80, 255), 
+	fill(random(80, 255),
+		 random(80, 255),
 		 random(80, 255));
 
 	textAlign(CENTER,CENTER);
@@ -183,9 +184,9 @@ void render(word, wordRect, rotation){
 	}
 
 	// fill(255, 50);
-	// rect(wordRect.x1, 
-	// 	wordRect.y1, 
-	// 	wordRect.x2 - wordRect.x1, 
+	// rect(wordRect.x1,
+	// 	wordRect.y1,
+	// 	wordRect.x2 - wordRect.x1,
 	// 	wordRect.y2 - wordRect.y1);
 }
 
@@ -193,16 +194,16 @@ class Point {
 	float x, y;
 
 	Point(ix, iy){
-		x = ix;	
+		x = ix;
 		y = iy;
 	}
-	
+
 	Point subtract(Point p){
-		return new Point(x - p.x, y - p.y);	
-	}	
+		return new Point(x - p.x, y - p.y);
+	}
 
 	Point add(Point p){
-		return new Point(x + p.x, y + p.y);	
+		return new Point(x + p.x, y + p.y);
 	}
 }
 
@@ -230,14 +231,14 @@ class Rectangle {
 
 Point calculateMid(Point p1, Point p2){
 	return new Point(
-		(p1.x + p2.x) / 2.0, 
+		(p1.x + p2.x) / 2.0,
 		(p1.y + p2.y) / 2.0
 	);
 }
 
 Point polarToCartesian(float radius, float phi){
 	return new Point(
-		radius * cos(phi) + width/2.0, 
+		radius * cos(phi) + width/2.0,
 		radius * sin(phi) + height/2.0
 	);
 }
